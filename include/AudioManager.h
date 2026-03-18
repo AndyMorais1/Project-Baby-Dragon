@@ -16,10 +16,10 @@ public:
     AudioManager(HardwareSerial* serial, uint8_t rx, uint8_t tx);
 
     void begin();
-    void playAlert();
     void setVolume(int vol);
     void nextVolume(); // Alterna entre níveis de volume pré-definidos
     void stop();
+    void playTrack(int trackNumber); // Toca uma faixa específica do SD
 };
 
 #endif

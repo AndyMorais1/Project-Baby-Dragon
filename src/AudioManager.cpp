@@ -28,10 +28,6 @@ void AudioManager::begin() {
     Serial.println(F("AudioManager: DFPlayer pronto!"));
 }
 
-void AudioManager::playAlert() {
-    // Espaço para tocar track de alerta
-}
-
 void AudioManager::setVolume(int vol) {
     // Espaço para ajustar volume do módulo
 }
@@ -42,4 +38,8 @@ void AudioManager::nextVolume() {
 
 void AudioManager::stop() {
     // Espaço para parar áudio
+}
+
+void AudioManager::playTrack(int trackNumber) {
+    // Espaço para tocar uma faixa específica
 }

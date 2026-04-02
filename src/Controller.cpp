@@ -24,8 +24,6 @@ void Controller::begin()
     pinMode(DFPLAYER_BUSY_PIN, INPUT); // Monitor de áudio (Pino BUSY)
     pinMode(_btnRestartPin, INPUT_PULLUP);
 
-    _audio.setVolume(20);
-
     // Coloca o sistema no estado inicial (Fase 1 - Introdução)
     initSystem();
 

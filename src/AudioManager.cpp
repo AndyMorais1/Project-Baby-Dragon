@@ -39,9 +39,6 @@ void AudioManager::playTrack(int number){
     _player.playFolder(2, number); // Pasta 2, Ficheiro 002.mp3
 }
 
-// void AudioManager::setVolume(int vol) {
-//     _player.volume(vol); // Função nativa para ajustar volume (0 a 30)
-// }
 
 void AudioManager::stop() {
     _player.stop(); // Função nativa para parar a reprodução

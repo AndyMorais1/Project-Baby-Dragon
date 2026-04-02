@@ -5,11 +5,11 @@ AudioManager::AudioManager(HardwareSerial* serial, uint8_t rx, uint8_t tx)
 
 void AudioManager::begin() {
     _serial->begin(9600, SERIAL_8N1, _rx, _tx);
-    delay(3000);
+    delay(1000);
     Serial.println(F("AudioManager: A iniciar DFPlayer..."));
      
     delay(3000);
-    if (!_player.begin(*_serial, false, false)) {
+    if (!_player.begin(*_serial, true, false)) {
         Serial.println(F("Erro: Não foi possível conectar ao DFPlayer Mini."));
         Serial.println(F("1. Verifique as ligações RX/TX."));
         Serial.println(F("2. Verifique se o Cartão SD está inserido."));

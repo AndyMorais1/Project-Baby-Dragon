@@ -3,7 +3,7 @@
 
 // --- LED NEOPixel (WS2812B) ---
 #define LED_PIN 13 // Apenas um pino para todas as LEDs
-#define NUM_LEDS 3 // Quantidade de LEDs na sua fita
+#define NUM_LEDS 10 // Quantidade de LEDs na sua fita
 #define SHINE 55
 #define LED_TYPE WS2812B
 #define COLOR_ORDER GRB
@@ -28,6 +28,6 @@
 
 // --- SENSOR ULTRASSÓNICO 2 (MUDANÇA DE FASE) ---
 #define TRIG2_PIN 14 // Sugestão de pino
-#define ECHO2_PIN 12 // Sugestão de pino
+#define ECHO2_PIN 27 // Sugestão de pino
 
 #endif

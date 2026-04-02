@@ -22,50 +22,23 @@ void AudioManager::begin() {
     Serial.println(F("AudioManager: DFPlayer pronto!"));
 }
 
-void AudioManager::startSound() {
-    for (int i = 1; i <= 7; i++) {
-        Serial.printf("Tocando faixa %d da pasta 02...\n", i);
+
+// void AudioManager::startSound() {
+//     for (int i = 1; i <= 7; i++) {
+//         Serial.printf("Tocando faixa %d da pasta 02...\n", i);
         
-        // Toca o ficheiro 'i' da pasta '2'
-        _player.playFolder(2, i); 
+//         // Toca o ficheiro 'i' da pasta '2'
+//         _player.playFolder(2, i); 
         
-        delay(30000); // Espera 30 segundos cada música
-    }
+//         delay(30000); // Espera 30 segundos cada música
+//     }
+// }
+
+void AudioManager::playTrack(int number){
+    Serial.printf("Playing track %d da Pasta 02\n", number);
+    _player.playFolder(2, number); // Pasta 2, Ficheiro 002.mp3
 }
 
-void AudioManager::wetHands(){
-    Serial.println("Playing 002.mp3 da Pasta 02");
-    _player.playFolder(2, 2); // Pasta 2, Ficheiro 002.mp3
-}
-
-void AudioManager::soap(){
-    Serial.println("Playing 003.mp3 da Pasta 02");
-    _player.playFolder(2, 3); // Pasta 2, Ficheiro 003.mp3
-}
-
-void AudioManager::rubHands(){
-    Serial.println("Playing 004.mp3 da Pasta 02");
-    _player.playFolder(2, 4); // Pasta 2, Ficheiro 004.mp3
-}
-
-void AudioManager::dryHands(){
-    Serial.println("Playing 005.mp3 da Pasta 02");
-    _player.playFolder(2, 5); // Pasta 2, Ficheiro 005.mp3
-}
-
-void AudioManager::conclusion(){
-    Serial.println("Playing 006.mp3 da Pasta 02");
-    _player.playFolder(2, 6); // Pasta 2, Ficheiro 006.mp3
-}
-
-void AudioManager::notStop(){
-    Serial.println("Playing 007.mp3 da Pasta 02");
-    _player.playFolder(2, 7); // Pasta 2, Ficheiro 007.mp3
-}
-
-void AudioManager::setVolume(int vol) {
-    _player.volume(vol); // Função nativa para ajustar volume (0 a 30)
-}
 
 void AudioManager::stop() {
     _player.stop(); // Função nativa para parar a reprodução

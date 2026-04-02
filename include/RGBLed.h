@@ -1,16 +1,16 @@
 #ifndef RGB_LED_H
 #define RGB_LED_H
 
-#include <Adafruit_NeoPixel.h>
+#include <FastLED.h>
 #include <Arduino.h>
+#include "Config.h" // Para acessar NUM_LEDS, LED_PIN, etc.
 
-class RGBLed {
+class   RGBLed {
 private:
-    Adafruit_NeoPixel _strip;
+    CRGB _leds[NUM_LEDS]; // Array que representa as suas 3 LEDs
 
 public:
-    // Construtor: pinos, canais PWM (0-15) e se é anodo comum
-    RGBLed(uint8_t pin, uint8_t numLeds);
+    RGBLed();
     
     void begin();
     void setColor(uint8_t r, uint8_t g, uint8_t b);

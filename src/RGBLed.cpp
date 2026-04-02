@@ -1,24 +1,32 @@
 #include "RGBLed.h"
 
-RGBLed::RGBLed(uint8_t pin, uint8_t numLeds) : 
-_strip(numLeds, pin, NEO_GRB + NEO_KHZ800) {
-    
+RGBLed::RGBLed() {
+    // O construtor FastLED é vazio pois a inicialização real ocorre no begin()
 }
 
 void RGBLed::begin() {
-    _strip.begin();
-    _strip.show(); // Inicializa todos os LEDs como apagados
-    _strip.setBrightness(100); // Brilho de 0 a 255
+    // Inicializa a fita de LEDs com as configurações do seu Config.h
+    FastLED.addLeds<LED_TYPE, LED_PIN, COLOR_ORDER>(_leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
+    
+    // Define o brilho máximo (SHINE = 55)
+    FastLED.setBrightness(SHINE);
+    
+    // Garante que comecem apagadas
+    off();
 }
 
 void RGBLed::setColor(uint8_t r, uint8_t g, uint8_t b) {
-    for (uint16_t i = 0; i < _strip.numPixels(); i++) {
-        _strip.setPixelColor(i, _strip.Color(r, g, b));
-    }
-    _strip.show();
+    // Preenche todo o array de LEDs com a cor desejada
+    fill_solid(_leds, NUM_LEDS, CRGB(r, g, b));
+    
+    // Empurra a cor para a fita física
+    FastLED.show();
 }
 
 void RGBLed::off() {
-    _strip.clear();
-    _strip.show();
+    // Limpa os dados de cor (preto)
+    FastLED.clear();
+    
+    // Atualiza a fita para apagar fisicamente
+    FastLED.show();
 }

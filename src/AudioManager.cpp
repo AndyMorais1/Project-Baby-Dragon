@@ -16,7 +16,7 @@ void AudioManager::begin() {
         return;
     }
 
-    _player.volume(3); 
+    _player.volume(20); 
     _player.EQ(DFPLAYER_EQ_NORMAL);
 
     Serial.println(F("AudioManager: DFPlayer pronto!"));

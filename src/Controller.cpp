@@ -37,12 +37,31 @@ void Controller::update()
         _lastPhaseUpdate = millis();
     }
 
-    // NOVA LÓGICA DE REPETIÇÃO (Sem depender do pino BUSY)
-    // Se passou o tempo de repetição (ex: 20s) DESDE que o áudio começou
-    if (millis() - _lastAudioStartTime > AUDIO_REPEAT_INTERVAL)
+    static bool waitingToRepeat = false;
+    static unsigned long waitStartTime = 0;
+
+    float dist = _sensorFase.readDistance();
+    bool handPresent = (dist > 0.1 && dist <= _phaseActivationDistance);
+
+    // 🎵 Detecta fim do áudio (baseado no tempo real definido)
+    bool audioFinished = (millis() >= _audioEndTime);
+
+    if (audioFinished && !waitingToRepeat)
     {
-        Serial.println("Sistema: Timeout de repetição atingido (Tempo Fixo).");
-        executePhaseFeedback(_currentPhase);
+        Serial.println("Áudio terminou.");
+        waitingToRepeat = true;
+        waitStartTime = millis();
+    }
+
+    // ⏱ Espera 20s REAIS
+    if (waitingToRepeat)
+    {
+        if (!handPresent && (millis() - waitStartTime >= AUDIO_REPEAT_INTERVAL))
+        {
+            Serial.println("Repetindo áudio após 20s reais.");
+            executePhaseFeedback(_currentPhase);
+            waitingToRepeat = false;
+        }
     }
 
     if (_currentPhase == 2)
@@ -112,6 +131,7 @@ void Controller::executePhaseFeedback(int phase)
     delay(500); 
 
     _lastAudioStartTime = millis();
+    _audioEndTime = _lastAudioStartTime + AUDIO_DURATION;
 
     switch (phase)
     {

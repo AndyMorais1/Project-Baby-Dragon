@@ -24,6 +24,7 @@ private:
     const int _phaseActivationDistance = 10; // Distância para "clicar" e mudar de fase
     const int _resetDistance = 8;
     const int _totalPhases = 7;
+    const unsigned long AUDIO_DURATION = 30000; // 30 segundos novo
 
     int _currentPhase = 0;
     bool _handDetectedInPhaseSensor = false; // Substitui o _itsDark (trava para o novo sensor)
@@ -31,6 +32,9 @@ private:
     unsigned long _lastUpdate = 0;
     unsigned long _lastPhaseUpdate = 0; // Timer para o sensor de fase
     unsigned long _lastAudioStartTime = 0;
+
+    unsigned long _audioEndTime = 0;
+    
 
     void moveArm();
     void squeezeTheDispenser();

@@ -30,6 +30,9 @@ void Controller::begin()
 void Controller::update()
 {
     handleRestart(); 
+    if (_systemLocked) {// única coisa que ainda funciona
+        return; 
+    }
 
     if (millis() - _lastPhaseUpdate > 150)
     {
@@ -43,8 +46,16 @@ void Controller::update()
     float dist = _sensorFase.readDistance();
     bool handPresent = (dist > 0.1 && dist <= _phaseActivationDistance);
 
-    // 🎵 Detecta fim do áudio (baseado no tempo real definido)
-    bool audioFinished = (millis() >= _audioEndTime);
+    //  Detecta fim do áudio (baseado no tempo real definido)
+   bool audioFinished = (millis() >= _audioEndTime);
+
+    // SE ESTIVER NA ÚLTIMA FASE E O ÁUDIO TERMINAR → BLOQUEIA
+    if (_currentPhase == 6 && audioFinished)
+    {
+        Serial.println("Sistema finalizado. A aguardar reset.");
+        _systemLocked = true;
+        return;
+    }
 
     if (audioFinished && !waitingToRepeat)
     {
@@ -72,6 +83,8 @@ void Controller::update()
             _lastUpdate = millis();
         }
     }
+
+    
 }
 
 void Controller::squeezeTheDispenser()
@@ -94,6 +107,8 @@ void Controller::squeezeTheDispenser()
             _alreadySqueezed = false;
         }
     }
+
+    if (_systemLocked) return;
 }
 
 void Controller::changePhase()
@@ -120,6 +135,8 @@ void Controller::changePhase()
     {
         _handDetectedInPhaseSensor = false;
     }
+
+    if (_systemLocked) return;
 }
 
 void Controller::executePhaseFeedback(int phase)
@@ -173,11 +190,13 @@ void Controller::handleRestart()
 
 void Controller::initSystem()
 {
+    _systemLocked = false;
     _currentPhase = 0;
     _handDetectedInPhaseSensor = false; 
     _alreadySqueezed = false;
     _lastUpdate = 0;
     _lastPhaseUpdate = 0;
+    
     
     _servo.setAngle(0);
     _audio.stop();

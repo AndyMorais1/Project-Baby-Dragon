@@ -30,4 +30,6 @@
 #define TRIG2_PIN 14 // Sugestão de pino
 #define ECHO2_PIN 27 // Sugestão de pino
 
+bool _systemLocked = false;
+
 #endif
